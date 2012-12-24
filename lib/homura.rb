@@ -5,6 +5,7 @@ module Munou
     def initialize(name)
       @name = name
       @dictionary = Munou::Dictionary.new
+      @emotion = Munou::Emotion.new(@dictionary)
       
       @resp_what = Munou::WhatResponder.new('What', @dictionary)
       @resp_random = Munou::RandomResponder.new('Random', @dictionary)
@@ -13,6 +14,8 @@ module Munou
     end
     
     def dialogue(input)
+      @emotion.update(input)
+
       case rand(100)
       when 0..59
         @responder = @resp_pattern
@@ -21,11 +24,15 @@ module Munou
       else
         @responder = @resp_what        
       end
-      return @responder.response(input)
+      return @responder.response(input, @emotion.mood)
     end
     
     def responder_name
       return @responder.name
+    end
+
+    def mood
+      return @emotion.mood
     end
   end
 end

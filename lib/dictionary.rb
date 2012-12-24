@@ -17,7 +17,7 @@ module Munou
         f.each do |line|
           pattern, phrases = line.chomp!.split("\t")
           next if pattern.nil? or phrases.nil?
-          @pattern.push({'pattern'=>pattern, 'phrases'=>phrases})
+          @pattern.push(Munou::PatternItem.new(pattern, phrases))
         end
       }
     end
