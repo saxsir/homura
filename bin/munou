@@ -3,6 +3,7 @@
 $LOAD_PATH << File.dirname(__FILE__) + '/../lib'
 require 'responder'
 require 'homura'
+require 'dictionary'
 
 def prompt(munou)
   return "#{munou.name}:#{munou.responder_name}> "

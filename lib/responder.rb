@@ -1,19 +1,22 @@
 # -*- coding: utf-8 -*-
 module Munou
   class Responder
-    def initialize(name)
+    attr_reader :name
+    
+    def initialize(name, dictionary)
       @name = name
+      @dictionary = dictionary
     end
     
     def response(input)
       return ''
     end
     
-    def name
-      return @name
+    def select_random(ary)
+      return ary[rand(ary.size)]
     end
   end
-
+  
   class WhatResponder < Responder
     def response(input)
       return "#{input}ってなに？"
@@ -21,24 +24,21 @@ module Munou
   end
   
   class RandomResponder < Responder
-    def initialize(name)
-      super
-      @phrases = []
-      File::open('lib/dics/random.txt') {|f|
-        f.each do |line|
-          line.chomp!
-          next if line.empty? #空行を読み飛ばす
-          @phrases.push(line)
+    def response(input)
+      return select_random(@dictionary.random)
+    end
+  end
+  
+  class PatternResponder < Responder
+    def response(input)
+      @dictionary.pattern.each do|ptn_item|
+        if m = input.match(ptn_item['pattern'])
+          resp = select_random(ptn_item['phrases'].split('|'))
+          return resp.gsub(/%match%/, m.to_s);
         end
-      }
-      
-      def response(input)
-        return select_random(@phrases)
       end
       
-      def select_random(ary)
-        return ary[rand(ary.size)]
-      end
+      return select_random(@dictionary.random)
     end
   end
 end
