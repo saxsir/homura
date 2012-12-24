@@ -1,2 +1,0 @@
-require 'responder'
-require 'mami'

@@ -1,11 +1,14 @@
 module Munou
-  class Mami
+  class Homura
     def initialize(name)
       @name = name
-      @responder = Munou::RandomResponder.new('Random')
+      @resp_what = Munou::WhatResponder.new('What')
+      @resp_random = Munou::RandomResponder.new('Random')
+      @responder = @resp_random
     end
     
     def dialogue(input)
+      @responder = rand(2) == 0 ? @resp_what : @resp_random
       return @responder.response(input)
     end
     
