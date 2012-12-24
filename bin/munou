@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+
+$LOAD_PATH << File.dirname(__FILE__) + '/../lib'
+require 'responder'
+require 'homura'
+
+def prompt(munou)
+  return "#{munou.name}:#{munou.responder_name}> "
+end   
+
+puts 'Munou System prototype : homura'
+munou = Munou::Homura.new('homura')
+loop do
+  print '> '
+  input = gets.chomp!
+  break if input == ''
+  
+  response = munou.dialogue(input)
+  puts prompt(munou) + response
+end
+
