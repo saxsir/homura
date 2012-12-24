@@ -1,7 +1,7 @@
 module Munou
   class Homura
     attr_reader :name
-
+    
     def initialize(name)
       @name = name
       @dictionary = Munou::Dictionary.new
