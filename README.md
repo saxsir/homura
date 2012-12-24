@@ -3,7 +3,7 @@
 
 ## 実行コマンド
 ### mami
-$ ruby bin/mamib
+$ ruby bin/munou
 
 ### others
 続々実装予定.
