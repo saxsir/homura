@@ -23,16 +23,23 @@ module Munou
   class RandomResponder < Responder
     def initialize(name)
       super
-      @response = ['約束するわ！絶対にあなたを救ってみせる！',
-                   'もう…誰にも頼らない　誰に…解ってもらう必要もない…',
-                   '暁美ほむらです。よろしくお願いします',
-                   'それじゃ…それじゃ私は、何のために…'
-                  ]
-    end
-    
-    def response(input)
-      return @response[rand(@response.size)]
+      @phrases = []
+      File::open('lib/dics/random.txt') {|f|
+        f.each do |line|
+          line.chomp!
+          next if line.empty? #空行を読み飛ばす
+          @phrases.push(line)
+        end
+      }
+      
+      def response(input)
+        return select_random(@phrases)
+      end
+      
+      def select_random(ary)
+        return ary[rand(ary.size)]
+      end
     end
   end
 end
-
+  
