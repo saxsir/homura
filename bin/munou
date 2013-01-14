@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# -*- coding: utf-8 -*-
 
 $LOAD_PATH << File.dirname(__FILE__) + '/../lib'
 require 'responder'
@@ -16,8 +17,11 @@ munou = Munou::Homura.new('homura')
 loop do
   print '> '
   input = gets.chomp!
-  break if input == ''
-  
+  # 終了する前に会話記録をログファイルにsave
+  if input == ''
+    munou.save
+    break
+  end
   response = munou.dialogue(input)
   puts prompt(munou) + response
 end

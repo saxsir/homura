@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 module Munou
   class Homura
     attr_reader :name
@@ -19,12 +20,21 @@ module Munou
       case rand(100)
       when 0..59
         @responder = @resp_pattern
-      when 60..89
+      when 60..100
         @responder = @resp_random
       else
         @responder = @resp_what        
       end
-      return @responder.response(input, @emotion.mood)
+      
+      # respを決めた後に学習しないと、覚えたての発言をオウム返しにする可能性があるので...
+      resp = @responder.response(input, @emotion.mood)
+      @dictionary.study(input)
+
+      return resp
+    end
+
+    def save
+      @dictionary.save
     end
     
     def responder_name

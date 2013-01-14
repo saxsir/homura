@@ -21,5 +21,16 @@ module Munou
         end
       }
     end
+
+    def study(input)
+      return if @random.include?(input)
+      @random.push(input)
+    end
+    
+    def save
+      File::open('lib/dics/random.txt', 'w') do |f|
+        f.puts(@random)
+      end
+    end
   end
 end
